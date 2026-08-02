@@ -1,0 +1,635 @@
+/* =========================================================================
+   Juicebox landing — Frutiger Aero.
+   The palette is lifted straight from the app's Daylight sky and its candy
+   flavours: sky blues, lime/tangerine/grape accents, white glass surfaces.
+   ========================================================================= */
+
+:root {
+    /* The Daylight sky ramp, top to bottom. */
+    --sky-1: #8FDCF7;
+    --sky-2: #4FADE4;
+    --sky-3: #2C7FC6;
+    --sky-4: #1A5FA8;
+    /* Aurora blooms that sit over the sky. */
+    --bloom-warm: rgba(200, 255, 238, 0.75);
+    --bloom-cool: rgba(126, 232, 160, 0.55);
+    /* Ink colour for text on the bright sky. */
+    --ink: #0B2F4C;
+    --ink-soft: rgba(11, 47, 76, 0.72);
+
+    /* Candy accents (from Flavor.swift). */
+    --lime: #7FC241;
+    --tangerine: #F5893C;
+    --grape: #8B5FBF;
+    --strawberry: #E8547E;
+    --bondi: #2C7FC6;
+
+    --glass: rgba(255, 255, 255, 0.42);
+    --glass-border: rgba(255, 255, 255, 0.7);
+    --glass-shadow: rgba(11, 47, 76, 0.18);
+
+    --radius: 18px;
+    --radius-lg: 28px;
+
+    --maxw: 1140px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    color: var(--ink);
+    line-height: 1.6;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* =========================================================================
+   Sky backdrop — fixed, sits behind everything.
+   ========================================================================= */
+.sky {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+}
+.sky-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, var(--sky-1) 0%, var(--sky-2) 38%, var(--sky-3) 72%, var(--sky-4) 100%);
+}
+.bloom {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.85;
+    animation: drift 18s ease-in-out infinite alternate;
+}
+.bloom-warm {
+    width: 60vw;
+    height: 60vw;
+    top: -10%;
+    right: -10%;
+    background: radial-gradient(circle, var(--bloom-warm), transparent 65%);
+}
+.bloom-cool {
+    width: 55vw;
+    height: 55vw;
+    bottom: -15%;
+    left: -10%;
+    background: radial-gradient(circle, var(--bloom-cool), transparent 65%);
+    animation-delay: -9s;
+}
+@keyframes drift {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(4%, 3%) scale(1.08); }
+}
+
+/* The bubbles — the single most recognisable Frutiger Aero motif. */
+.bubbles { position: absolute; inset: 0; }
+.bubble {
+    position: absolute;
+    bottom: -60px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%,
+        rgba(255,255,255,0.9), rgba(255,255,255,0.25) 40%, rgba(255,255,255,0.05));
+    box-shadow: inset 0 0 12px rgba(255,255,255,0.4), 0 0 8px rgba(255,255,255,0.3);
+    animation: rise linear infinite;
+    opacity: 0.6;
+}
+@keyframes rise {
+    0%   { transform: translateY(0) translateX(0); opacity: 0; }
+    10%  { opacity: 0.6; }
+    90%  { opacity: 0.4; }
+    100% { transform: translateY(-110vh) translateX(var(--drift, 30px)); opacity: 0; }
+}
+
+/* =========================================================================
+   Glass — the surface everything floats on.
+   ========================================================================= */
+.glass {
+    background: var(--glass);
+    backdrop-filter: blur(20px) saturate(1.6);
+    -webkit-backdrop-filter: blur(20px) saturate(1.6);
+    border: 1px solid var(--glass-border);
+    box-shadow:
+        0 8px 32px var(--glass-shadow),
+        inset 0 1px 0 rgba(255,255,255,0.6);
+    border-radius: var(--radius-lg);
+    /* The signature gloss sweep across the top of every glass surface. */
+    position: relative;
+    overflow: hidden;
+}
+.glass::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 45%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.38), rgba(255,255,255,0));
+    pointer-events: none;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+/* =========================================================================
+   Nav
+   ========================================================================= */
+.nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    padding: 14px 0;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background: rgba(143, 220, 247, 0.25);
+    border-bottom: 1px solid rgba(255,255,255,0.4);
+}
+.nav-inner {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: -0.02em;
+}
+.brand-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.5);
+}
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+.nav-links a {
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    transition: opacity 0.15s;
+}
+.nav-links a:hover { opacity: 0.7; }
+.nav-cta {
+    background: var(--ink);
+    color: #fff !important;
+    padding: 9px 18px;
+    border-radius: 100px;
+    box-shadow: 0 2px 10px rgba(11,47,76,0.3);
+}
+.nav-cta:hover { opacity: 0.85; }
+
+/* =========================================================================
+   Hero
+   ========================================================================= */
+.hero {
+    padding: 70px 24px 50px;
+    max-width: var(--maxw);
+    margin: 0 auto;
+}
+.hero-card {
+    padding: 56px 48px 40px;
+    text-align: center;
+}
+.hero-badge {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: rgba(255,255,255,0.6);
+    padding: 6px 14px;
+    border-radius: 100px;
+    border: 1px solid rgba(255,255,255,0.8);
+    margin-bottom: 24px;
+}
+.hero h1 {
+    font-size: clamp(36px, 6vw, 64px);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 20px;
+}
+/* Glossy gradient text for the accent words. */
+.gloss-text {
+    background: linear-gradient(135deg, var(--sky-2), var(--lime), var(--tangerine));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 2px 4px rgba(255,255,255,0.5));
+}
+.lede {
+    font-size: clamp(16px, 2vw, 19px);
+    color: var(--ink-soft);
+    max-width: 620px;
+    margin: 0 auto 32px;
+}
+.hero-actions {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+}
+
+/* The floating app icon with a wet reflection beneath it. */
+.hero-app-icon {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+}
+.floating-icon {
+    width: clamp(120px, 18vw, 180px);
+    height: auto;
+    border-radius: 22%;
+    box-shadow:
+        0 20px 50px rgba(11,47,76,0.35),
+        0 6px 16px rgba(11,47,76,0.2),
+        inset 0 2px 0 rgba(255,255,255,0.4);
+    animation: bob 6s ease-in-out infinite;
+}
+@keyframes bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
+.icon-reflection {
+    width: clamp(120px, 18vw, 180px);
+    height: 60px;
+    margin-top: 8px;
+    background: radial-gradient(ellipse at center top, rgba(11,47,76,0.3), transparent 70%);
+    filter: blur(8px);
+    border-radius: 50%;
+    animation: bobShadow 6s ease-in-out infinite;
+}
+@keyframes bobShadow {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(0.85); opacity: 0.35; }
+}
+
+/* =========================================================================
+   Buttons
+   ========================================================================= */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 14px 28px;
+    border-radius: 100px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.15s, box-shadow 0.15s;
+    position: relative;
+    overflow: hidden;
+}
+.btn:active { transform: scale(0.97); }
+.btn-primary {
+    color: #fff;
+    background: linear-gradient(180deg, var(--sky-2), var(--sky-3));
+    box-shadow:
+        0 6px 20px rgba(44,127,198,0.45),
+        inset 0 1px 0 rgba(255,255,255,0.4);
+}
+.btn-primary:hover {
+    box-shadow: 0 8px 26px rgba(44,127,198,0.55), inset 0 1px 0 rgba(255,255,255,0.5);
+    transform: translateY(-1px);
+}
+/* The gloss sweep across a primary button. */
+.btn-primary::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 50%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.35), transparent);
+    border-radius: 100px 100px 0 0;
+    pointer-events: none;
+}
+.btn-ghost {
+    color: var(--ink);
+    background: rgba(255,255,255,0.5);
+    border: 1px solid rgba(255,255,255,0.8);
+    backdrop-filter: blur(10px);
+}
+.btn-ghost:hover { background: rgba(255,255,255,0.65); }
+
+/* =========================================================================
+   Systems marquee
+   ========================================================================= */
+.systems-marquee {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 30px 24px;
+    text-align: center;
+}
+.section-eyebrow {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-soft);
+    margin-bottom: 18px;
+}
+.systems-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+.chip {
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 100px;
+    background: rgba(255,255,255,0.55);
+    border: 1px solid rgba(255,255,255,0.8);
+    box-shadow: 0 2px 8px rgba(11,47,76,0.1);
+    backdrop-filter: blur(8px);
+    transition: transform 0.15s;
+}
+.chip:hover { transform: translateY(-2px); }
+
+/* =========================================================================
+   Section heads
+   ========================================================================= */
+.section-head {
+    text-align: center;
+    max-width: 680px;
+    margin: 0 auto 40px;
+}
+.section-head h2 {
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+}
+
+/* =========================================================================
+   Features grid
+   ========================================================================= */
+.features {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 60px 24px;
+}
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 22px;
+}
+.feature {
+    padding: 30px 26px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.feature:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 40px var(--glass-shadow), inset 0 1px 0 rgba(255,255,255,0.7);
+}
+.feature-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, var(--accent, var(--sky-2)), rgba(255,255,255,0.3));
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--accent, var(--sky-2)) 40%, transparent),
+                inset 0 1px 0 rgba(255,255,255,0.6);
+}
+.feature h3 {
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+.feature p {
+    color: var(--ink-soft);
+    font-size: 15px;
+}
+.feature code {
+    font-family: 'SF Mono', ui-monospace, monospace;
+    font-size: 13px;
+    background: rgba(11,47,76,0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+/* =========================================================================
+   How it works
+   ========================================================================= */
+.how {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 40px 24px 60px;
+}
+.steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 22px;
+}
+.step {
+    padding: 32px 28px;
+    position: relative;
+}
+.step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(180deg, var(--sky-2), var(--sky-3));
+    color: #fff;
+    font-weight: 800;
+    font-size: 18px;
+    margin-bottom: 14px;
+    box-shadow: 0 4px 12px rgba(44,127,198,0.4), inset 0 1px 0 rgba(255,255,255,0.5);
+}
+.step h3 { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+.step p { color: var(--ink-soft); font-size: 15px; }
+
+/* =========================================================================
+   FAQ
+   ========================================================================= */
+.faq {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 40px 24px 60px;
+}
+.faq-list { display: flex; flex-direction: column; gap: 12px; }
+.faq-item {
+    padding: 0;
+    border-radius: var(--radius);
+}
+.faq-item summary {
+    padding: 20px 24px;
+    font-weight: 700;
+    font-size: 17px;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after {
+    content: '+';
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--ink-soft);
+    transition: transform 0.2s;
+}
+.faq-item[open] summary::after { transform: rotate(45deg); }
+.faq-item p {
+    padding: 0 24px 20px;
+    color: var(--ink-soft);
+    font-size: 15px;
+}
+
+/* =========================================================================
+   Waitlist
+   ========================================================================= */
+.waitlist {
+    max-width: 640px;
+    margin: 0 auto 80px;
+    padding: 0 24px;
+}
+.waitlist-card {
+    padding: 48px 40px;
+    text-align: center;
+}
+.waitlist-card h2 {
+    font-size: clamp(26px, 4vw, 36px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+}
+.waitlist-card > p {
+    color: var(--ink-soft);
+    margin-bottom: 24px;
+}
+.waitlist-form {
+    display: flex;
+    gap: 10px;
+    max-width: 440px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.waitlist-form input {
+    flex: 1;
+    min-width: 200px;
+    padding: 14px 20px;
+    font-size: 16px;
+    font-family: inherit;
+    border-radius: 100px;
+    border: 1px solid rgba(255,255,255,0.8);
+    background: rgba(255,255,255,0.7);
+    color: var(--ink);
+    outline: none;
+    transition: box-shadow 0.15s;
+}
+.waitlist-form input:focus {
+    box-shadow: 0 0 0 3px rgba(79,173,228,0.4);
+}
+.waitlist-form input::placeholder { color: var(--ink-soft); }
+.form-feedback {
+    min-height: 22px;
+    font-weight: 600;
+    margin-top: 12px;
+    color: var(--lime);
+    transition: opacity 0.2s;
+}
+.fineprint {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-top: 16px;
+    opacity: 0.8;
+}
+
+/* Form button states */
+.btn-spinner {
+    width: 16px; height: 16px;
+    border: 2px solid rgba(255,255,255,0.4);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    display: none;
+}
+.btn.loading .btn-label { opacity: 0.7; }
+.btn.loading .btn-spinner { display: inline-block; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* =========================================================================
+   Footer
+   ========================================================================= */
+.footer {
+    background: rgba(11,47,76,0.85);
+    color: rgba(255,255,255,0.8);
+    backdrop-filter: blur(10px);
+    padding: 48px 24px 32px;
+    margin-top: 40px;
+}
+.footer-inner {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    text-align: center;
+}
+.footer .brand {
+    justify-content: center;
+    color: #fff;
+    margin-bottom: 14px;
+}
+.footer p { font-size: 14px; margin-bottom: 16px; }
+.footer-links {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+.footer-links a {
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+}
+.footer-links a:hover { color: #fff; }
+.copyright { font-size: 13px; opacity: 0.6; margin: 0; }
+
+/* =========================================================================
+   Responsive
+   ========================================================================= */
+@media (max-width: 640px) {
+    .nav-links a:not(.nav-cta) { display: none; }
+    .hero-card { padding: 40px 24px 32px; }
+    .hero-actions { flex-direction: column; align-items: stretch; }
+    .btn { justify-content: center; }
+}
+
+/* Respect reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    .floating-icon, .bloom, .bubble { animation: none !important; }
+}
