@@ -4,28 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Juicebox — A glossy macOS retro emulator</title>
-    <meta name="description" content="Juicebox indexes your retro game library, identifies each game by file signature, and plays it in-app via bundled libretro cores. A native Mac app in deliberately glossy Frutiger Aero style.">
+    <meta name="description" content="A native macOS retro game emulator with a deliberately glossy Frutiger Aero interface. Drop in your ROMs, get box art and metadata automatically, and play right there in the app.">
+    <meta name="theme-color" content="#2C7FC6">
+    <meta property="og:title" content="Juicebox — A glossy macOS retro emulator">
+    <meta property="og:description" content="Drop in your ROMs, get box art automatically, and play ten consoles right there in the app. No setup, no external emulator.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="assets/app-icon.png">
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="assets/app-icon.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- The animated sky backdrop, fixed behind everything. -->
+    <!-- Sky backdrop, fixed behind everything. -->
     <div class="sky" aria-hidden="true">
         <div class="sky-gradient"></div>
         <div class="bloom bloom-warm"></div>
         <div class="bloom bloom-cool"></div>
+        <div class="dot-grid"></div>
         <div class="bubbles" id="bubbles"></div>
     </div>
 
+    <!-- Announcement bar -->
+    <div class="announcement">
+        <span class="announcement-badge">Pre-Alpha</span>
+        <span class="announcement-text">Juicebox is in active development. Join the waitlist for the first build.</span>
+    </div>
+
+    <!-- Nav -->
     <header class="nav">
         <div class="nav-inner">
-            <div class="brand">
+            <a href="#" class="brand">
                 <img src="assets/app-icon.png" alt="" class="brand-icon">
                 <span>Juicebox</span>
-            </div>
+            </a>
             <nav class="nav-links">
                 <a href="#features">Features</a>
                 <a href="#systems">Systems</a>
@@ -36,30 +49,38 @@
     </header>
 
     <main>
-        <!-- Hero -->
+        <!-- Hero: left/right split (Koji's disciplined layout) -->
         <section class="hero">
-            <div class="hero-card glass">
-                <div class="hero-badge">Pre-Alpha · macOS 26 · Apple Silicon</div>
-                <h1>Your retro library, <span class="gloss-text">made glossy.</span></h1>
-                <p class="lede">Juicebox indexes your ROMs, identifies each game by its file signature, decorates it with box art, and plays it right there in the app. No setup, no external emulator — if Juicebox lists a console, it runs it.</p>
-                <div class="hero-actions">
-                    <a href="#waitlist" class="btn btn-primary">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                        Join the Waitlist
-                    </a>
-                    <a href="#features" class="btn btn-ghost">See what's inside</a>
+            <div class="hero-inner">
+                <div class="hero-left">
+                    <h1>Your retro library, <span class="gloss-text">made glossy.</span></h1>
+                    <p class="hero-tagline">Drop in your ROMs. Juicebox identifies each game by its file signature, decorates it with box art, and plays it right there in the app — no setup, no external emulator.</p>
+                    <div class="hero-ctas">
+                        <a href="#waitlist" class="btn btn-primary">
+                            Join the Waitlist
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
+                        <a href="#features" class="btn btn-ghost">See what's inside</a>
+                    </div>
+                    <div class="hero-meta">
+                        <span>macOS 26</span>
+                        <span class="dot">•</span>
+                        <span>Apple Silicon</span>
+                        <span class="dot">•</span>
+                        <span>GPL-3.0</span>
+                    </div>
                 </div>
-                <div class="hero-app-icon">
-                    <img src="assets/app-icon.png" alt="Juicebox app icon" class="floating-icon">
-                    <div class="icon-reflection"></div>
+                <div class="hero-right">
+                    <div class="hero-glow"></div>
+                    <img src="assets/app-icon.png" alt="Juicebox app icon" class="hero-app-icon">
                 </div>
             </div>
         </section>
 
-        <!-- Marquee of systems -->
-        <section class="systems-marquee" id="systems">
-            <p class="section-eyebrow">Nine consoles, ready to play</p>
-            <div class="systems-row">
+        <!-- Systems marquee -->
+        <section class="systems" id="systems">
+            <p class="eyebrow">Ten consoles, ready to play</p>
+            <div class="chips">
                 <span class="chip">NES</span>
                 <span class="chip">Master System</span>
                 <span class="chip">Game Boy</span>
@@ -73,114 +94,131 @@
             </div>
         </section>
 
-        <!-- Features -->
-        <section class="features" id="features">
+        <!-- Features: bento grid -->
+        <section class="section" id="features">
             <div class="section-head">
-                <p class="section-eyebrow">Everything in the box</p>
+                <p class="eyebrow">Everything in the box</p>
                 <h2>A frontend that does the work for you.</h2>
             </div>
-            <div class="feature-grid">
-                <article class="feature glass">
-                    <div class="feature-icon" style="--accent: #7FC241;">🎯</div>
+            <div class="bento">
+                <article class="card card-wide">
+                    <div class="icon-wrap" style="--accent:#4FADE4">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg>
+                    </div>
                     <h3>Identification by signature</h3>
-                    <p>Juicebox reads each file's header, never its name. A probe order built from real cross-detection risks means the right console is picked every time — extensions don't matter.</p>
+                    <p>Juicebox reads each file's header, never its name or extension. A probe order built from real cross-detection risks means the right console is picked every time — even for headerless ROMs.</p>
                 </article>
-                <article class="feature glass">
-                    <div class="feature-icon" style="--accent: #4FADE4;">🎮</div>
+                <article class="card">
+                    <div class="icon-wrap" style="--accent:#7FC241">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4M8 10v4M15 11h.01M18 13h.01"/></svg>
+                    </div>
                     <h3>Plays in-app</h3>
-                    <p>Bundled libretro cores run every system Juicebox lists, on a dedicated real-time thread. Save states, rewind, cheats and shaders are all built in. No external emulator, ever.</p>
+                    <p>Bundled libretro cores run every system on a dedicated real-time thread.</p>
                 </article>
-                <article class="feature glass">
-                    <div class="feature-icon" style="--accent: #F5893C;">🖼️</div>
+                <article class="card">
+                    <div class="icon-wrap" style="--accent:#F5893C">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 3v18"/></svg>
+                    </div>
                     <h3>Box art from IGDB</h3>
-                    <p>Each game is decorated with cover art and metadata from IGDB, scoped by platform. A weak match is left explicitly unmatched rather than attaching the wrong artwork.</p>
+                    <p>Cover art, summary and metadata arrive automatically — a weak match is left unmatched rather than wrong.</p>
                 </article>
-                <article class="feature glass">
-                    <div class="feature-icon" style="--accent: #8B5FBF;">✨</div>
+                <article class="card">
+                    <div class="icon-wrap" style="--accent:#8B5FBF">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z"/></svg>
+                    </div>
                     <h3>Deliberately glossy</h3>
-                    <p>A Frutiger Aero interface: the window sits on a sky, covers stand on reflective glass with wet-floor reflections, and every surface carries a hand-drawn gloss sweep.</p>
+                    <p>A Frutiger Aero interface: skies, reflective glass, wet-floor reflections, hand-drawn gloss.</p>
                 </article>
-                <article class="feature glass">
-                    <div class="feature-icon" style="--accent: #E8547E;">⏪</div>
+                <article class="card">
+                    <div class="icon-wrap" style="--accent:#E8547E">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-4"/></svg>
+                    </div>
                     <h3>Rewind &amp; save states</h3>
-                    <p>Hold a key to scrub backwards through recent history. Six save-state slots with thumbnails, plus quick-resume that drops you back where you left off — no cold boot.</p>
+                    <p>Scrub backwards through recent history. Six save slots with thumbnails, plus quick-resume.</p>
                 </article>
-                <article class="feature glass">
-                    <div class="feature-icon" style="--accent: #4F8C22;">🎛️</div>
+                <article class="card card-wide">
+                    <div class="icon-wrap" style="--accent:#4F8C22">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M7 12h-3M8 9.5v5M12 9.5v5M16 9.5v5M20 12h-3"/></svg>
+                    </div>
                     <h3>Full controller support</h3>
-                    <p>Any MFi controller is detected automatically. Keyboard and gamepad are both fully remappable per system, and changes apply to a running game without a restart.</p>
+                    <p>Any MFi controller is detected automatically — DualSense, Xbox, Joy-Cons, 8BitDo. Keyboard and gamepad are both fully remappable per system, and changes apply to a running game without a restart.</p>
                 </article>
-                <article class="feature glass">
-                    <div class="feature-icon" style="--accent: #D8453F;"> CRT</div>
+                <article class="card">
+                    <div class="icon-wrap" style="--accent:#D8453F">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg>
+                    </div>
                     <h3>Ten screen shaders</h3>
-                    <p>From pristine pixels to a full curved CRT with aperture grille and phosphor bloom — swap shaders live while you play, and remember a favourite per game.</p>
+                    <p>From pristine pixels to a full curved CRT with aperture grille and phosphor bloom — swap live.</p>
                 </article>
-                <article class="feature glass">
-                    <div class="feature-icon" style="--accent: #2C7FC6;">💾</div>
+                <article class="card">
+                    <div class="icon-wrap" style="--accent:#2C7FC6">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                    </div>
                     <h3>Cheats, your way</h3>
-                    <p>Paste a Game Genie or Game Shark code, or import a <code>.cht</code> file. The core decodes its console's format; Juicebox just toggles them on and off, live.</p>
+                    <p>Paste a Game Genie or Game Shark code, or import a <code>.cht</code> file. Toggles apply live.</p>
                 </article>
             </div>
         </section>
 
-        <!-- How it works strip -->
-        <section class="how">
+        <!-- How it works -->
+        <section class="section">
             <div class="section-head">
-                <p class="section-eyebrow">How it works</p>
+                <p class="eyebrow">How it works</p>
                 <h2>Drop a folder. That's the setup.</h2>
             </div>
             <div class="steps">
-                <div class="step glass">
+                <div class="step card">
                     <span class="step-num">1</span>
                     <h3>Drop your ROMs</h3>
-                    <p>Drag in files or a folder. Juicebox hashes each one and works out which console it belongs to — by what's <em>inside</em> the file, not the extension.</p>
+                    <p>Drag in files or a folder. Juicebox hashes each one and works out which console it belongs to — by what's <em>inside</em> the file.</p>
                 </div>
-                <div class="step glass">
+                <div class="step card">
                     <span class="step-num">2</span>
                     <h3>Art lands automatically</h3>
-                    <p>Cover art, summary, publisher and release year arrive from IGDB. Games without a match get a drawn cartridge — never a broken-looking tile.</p>
+                    <p>Cover art, summary, publisher and release year arrive from IGDB. Games without a match get a drawn cartridge.</p>
                 </div>
-                <div class="step glass">
+                <div class="step card">
                     <span class="step-num">3</span>
                     <h3>Press play</h3>
-                    <p>The right core loads, your battery save restores, and the game runs full-window with shaders, cheats and rewind ready if you want them.</p>
+                    <p>The right core loads, your battery save restores, and the game runs full-window with shaders and rewind ready.</p>
                 </div>
             </div>
         </section>
 
         <!-- FAQ -->
-        <section class="faq" id="faq">
+        <section class="section" id="faq">
             <div class="section-head">
-                <p class="section-eyebrow">Questions</p>
+                <p class="eyebrow">Questions</p>
                 <h2>Before you ask.</h2>
             </div>
             <div class="faq-list">
-                <details class="faq-item glass">
+                <details class="faq-item card">
                     <summary>Do I need BIOS files or firmware?</summary>
-                    <p>No. Juicebox ships no BIOS and needs none — melonDS falls back to its own FreeBIOS, and PCSX-ReARMed ships an HLE BIOS. If you own dumps from your own console, you can drop them in for higher accuracy, but it's entirely optional.</p>
+                    <div class="faq-body"><p>No. Juicebox ships no BIOS and needs none — melonDS falls back to its own FreeBIOS, and PCSX-ReARMed ships an HLE BIOS. Drop in your own dumps for higher accuracy if you like, but it's entirely optional.</p></div>
                 </details>
-                <details class="faq-item glass">
+                <details class="faq-item card">
                     <summary>Does Juicebox ship ROMs?</summary>
-                    <p>No, and it never will. Juicebox indexes ROMs where you already keep them and never moves or copies them unless you ask it to. It's a frontend, not a source of games.</p>
+                    <div class="faq-body"><p>No, and it never will. Juicebox indexes ROMs where you already keep them and never moves or copies them unless you ask. It's a frontend, not a source of games.</p></div>
                 </details>
-                <details class="faq-item glass">
+                <details class="faq-item card">
                     <summary>What about N64 and 3DS?</summary>
-                    <p>Both are <em>recognised</em> — drop one in and Juicebox tells you what it is — but not yet playable. N64 cores need a Vulkan context Juicebox can't currently provide, and no 3DS core is published for macOS arm64. The header parsing is written and tested, so it's a matter of solving the emulation, not the formats.</p>
+                    <div class="faq-body"><p>Both are <em>recognised</em> — drop one in and Juicebox tells you what it is — but not yet playable. They need a hardware-rendered GPU context that the render bridge doesn't provide yet. The detection and header parsing are written and tested, so it's a matter of solving the emulation pipeline, not the formats.</p></div>
                 </details>
-                <details class="faq-item glass">
+                <details class="faq-item card">
                     <summary>Is it free?</summary>
-                    <p>Yes. Juicebox is GPL-3.0 because it bundles libretro cores that are — the same route OpenEmu and RetroArch took. It'll always be free.</p>
+                    <div class="faq-body"><p>Yes. Juicebox is GPL-3.0 because it bundles libretro cores that are — the same route OpenEmu and RetroArch took. It'll always be free.</p></div>
                 </details>
-                <details class="faq-item glass">
+                <details class="faq-item card">
                     <summary>What Mac do I need?</summary>
-                    <p>macOS 26 (Tahoe) or later, on Apple Silicon. The cores are arm64 and several use dynamic recompilers that want the JIT entitlement.</p>
+                    <div class="faq-body"><p>macOS 26 (Tahoe) or later, on Apple Silicon. The cores are arm64 and several use dynamic recompilers that want the JIT entitlement.</p></div>
                 </details>
             </div>
         </section>
 
         <!-- Waitlist -->
-        <section class="waitlist" id="waitlist">
-            <div class="waitlist-card glass">
+        <section class="section" id="waitlist">
+            <div class="waitlist-card card">
+                <div class="waitlist-glow"></div>
                 <h2>Be first in line.</h2>
                 <p>Juicebox is in pre-alpha. Join the waitlist and you'll get a link the moment the first build drops.</p>
                 <form class="waitlist-form" id="waitlist-form">
@@ -191,24 +229,24 @@
                     </button>
                 </form>
                 <p class="form-feedback" id="form-feedback" role="status"></p>
-                <p class="fineprint">No spam. One email when the build is ready, and the occasional progress note. Unsubscribe anytime.</p>
+                <p class="fineprint">No spam. One email when the build is ready, and the occasional progress note.</p>
             </div>
         </section>
     </main>
 
     <footer class="footer">
         <div class="footer-inner">
-            <div class="brand">
+            <a href="#" class="brand">
                 <img src="assets/app-icon.png" alt="" class="brand-icon">
                 <span>Juicebox</span>
-            </div>
-            <p>Juicebox ships no ROMs, no BIOS files, no firmware and no box art. A native macOS frontend for retro emulation.</p>
+            </a>
+            <p>A native macOS frontend for retro emulation. Ships no ROMs, no BIOS, no firmware and no box art.</p>
             <div class="footer-links">
                 <a href="https://github.com/olii-dev/Juicebox" target="_blank" rel="noopener">GitHub</a>
                 <a href="#features">Features</a>
                 <a href="#faq">FAQ</a>
             </div>
-            <p class="copyright">© <span id="year"></span> Juicebox. GPL-3.0.</p>
+            <p class="copyright">© <span id="year"></span> Juicebox · GPL-3.0</p>
         </div>
     </footer>
 
