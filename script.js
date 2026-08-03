@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
     setYear();
     spawnBubbles();
     wireWaitlist();
-    wireScrollReveal();
 });
 
 // Footer year.
