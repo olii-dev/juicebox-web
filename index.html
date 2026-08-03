@@ -14,7 +14,13 @@
     <link rel="icon" href="assets/app-icon.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
+    <script>
+        // Arm scroll-reveal synchronously, before paint. If JS is disabled or
+        // this fails, the .js-anim class never lands and all content stays
+        // visible — the page is always readable.
+        document.documentElement.classList.add('js-anim');
+    </script>
 </head>
 <body>
     <!-- Sky backdrop, fixed behind everything. -->
@@ -53,7 +59,7 @@
         <section class="hero">
             <div class="hero-inner">
                 <div class="hero-left">
-                    <h1>Blow the dust off. <span class="gloss-text">Press play.</span></h1>
+                    <h1>Blow the dust off. <span class="press-play">Press play.</span></h1>
                     <p class="hero-tagline">Drop in your ROMs. Juicebox identifies each game by what's inside the file, decorates it with box art, and runs it right there in the app — no setup, no external emulator, no fuss.</p>
                     <div class="hero-ctas">
                         <a href="#waitlist" class="btn btn-primary">
