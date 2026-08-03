@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setYear();
     spawnBubbles();
     wireWaitlist();
+    wireScrollReveal();
 });
 
 // Footer year.
@@ -84,4 +85,28 @@ function showFeedback(el, message, color) {
     el.textContent = message;
     el.style.color = color;
     el.style.opacity = '1';
+}
+
+// ---------------------------------------------------------------------------
+// Scroll-reveal. Elements tagged `.reveal` fade up the first time they enter
+// the viewport. Staggered by giving each card in a grid a tiny incremental
+// delay so a row appears to cascade rather than pop in all at once.
+// ---------------------------------------------------------------------------
+function wireScrollReveal() {
+    // Honour reduced motion: skip the observer so everything is visible.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+        return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('in');
+                observer.unobserve(entry.target); // reveal once
+            }
+        });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 }

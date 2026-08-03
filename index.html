@@ -14,7 +14,7 @@
     <link rel="icon" href="assets/app-icon.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Sky backdrop, fixed behind everything. -->
@@ -53,10 +53,11 @@
         <section class="hero">
             <div class="hero-inner">
                 <div class="hero-left">
-                    <h1>Your retro library, <span class="gloss-text">made glossy.</span></h1>
-                    <p class="hero-tagline">Drop in your ROMs. Juicebox identifies each game by its file signature, decorates it with box art, and plays it right there in the app — no setup, no external emulator.</p>
+                    <h1>Blow the dust off. <span class="gloss-text">Press play.</span></h1>
+                    <p class="hero-tagline">Drop in your ROMs. Juicebox identifies each game by what's inside the file, decorates it with box art, and runs it right there in the app — no setup, no external emulator, no fuss.</p>
                     <div class="hero-ctas">
                         <a href="#waitlist" class="btn btn-primary">
+                            <span class="shine"></span>
                             Join the Waitlist
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                         </a>
@@ -78,7 +79,7 @@
         </section>
 
         <!-- Systems marquee -->
-        <section class="systems" id="systems">
+        <section class="systems reveal" id="systems">
             <p class="eyebrow">Ten consoles, ready to play</p>
             <div class="chips">
                 <span class="chip">NES</span>
@@ -95,12 +96,12 @@
         </section>
 
         <!-- Features: bento grid -->
-        <section class="section" id="features">
+        <section class="section reveal" id="features">
             <div class="section-head">
                 <p class="eyebrow">Everything in the box</p>
                 <h2>A frontend that does the work for you.</h2>
             </div>
-            <div class="bento">
+            <div class="bento reveal">
                 <article class="card card-wide">
                     <div class="icon-wrap" style="--accent:#4FADE4">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg>
@@ -161,12 +162,12 @@
         </section>
 
         <!-- How it works -->
-        <section class="section">
+        <section class="section reveal">
             <div class="section-head">
                 <p class="eyebrow">How it works</p>
                 <h2>Drop a folder. That's the setup.</h2>
             </div>
-            <div class="steps">
+            <div class="steps reveal">
                 <div class="step card">
                     <span class="step-num">1</span>
                     <h3>Drop your ROMs</h3>
@@ -186,12 +187,12 @@
         </section>
 
         <!-- FAQ -->
-        <section class="section" id="faq">
+        <section class="section reveal" id="faq">
             <div class="section-head">
                 <p class="eyebrow">Questions</p>
                 <h2>Before you ask.</h2>
             </div>
-            <div class="faq-list">
+            <div class="faq-list reveal">
                 <details class="faq-item card">
                     <summary>Do I need BIOS files or firmware?</summary>
                     <div class="faq-body"><p>No. Juicebox ships no BIOS and needs none — melonDS falls back to its own FreeBIOS, and PCSX-ReARMed ships an HLE BIOS. Drop in your own dumps for higher accuracy if you like, but it's entirely optional.</p></div>
@@ -216,7 +217,7 @@
         </section>
 
         <!-- Waitlist -->
-        <section class="section" id="waitlist">
+        <section class="section reveal" id="waitlist">
             <div class="waitlist-card card">
                 <div class="waitlist-glow"></div>
                 <h2>Be first in line.</h2>
@@ -224,6 +225,7 @@
                 <form class="waitlist-form" id="waitlist-form">
                     <input type="email" id="waitlist-email" placeholder="you@example.com" required autocomplete="email">
                     <button type="submit" class="btn btn-primary">
+                        <span class="shine"></span>
                         <span class="btn-label">Join the Waitlist</span>
                         <span class="btn-spinner" aria-hidden="true"></span>
                     </button>
